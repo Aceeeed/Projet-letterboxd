@@ -1,0 +1,36 @@
+name: Cinema Letterboxd Alert
+
+on:
+  schedule:
+    # Déclenchement automatique chaque mercredi à 06h00 UTC (07h00 / 08h00 heure de Paris selon saison)
+    - cron: '0 6 * * 3'
+  workflow_dispatch: # Permet de lancer le workflow manuellement depuis l'interface GitHub
+
+jobs:
+  check-movies-and-notify:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout du code
+        uses: actions/checkout@v4
+
+      - name: Configuration de Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Installation des dépendances
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Exécution du script d'alerte cinéma
+        env:
+          LETTERBOXD_USERNAME: ${{ secrets.LETTERBOXD_USERNAME }}
+          GMAIL_SENDER: ${{ secrets.GMAIL_SENDER }}
+          GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
+          RECIPIENT_EMAIL: ${{ secrets.RECIPIENT_EMAIL }}
+          CINEMA_URL: ${{ secrets.CINEMA_URL }}
+        run: |
+          python main.py

@@ -64,3 +64,4 @@ Dans votre dépôt GitHub :
 ### Sur GitHub Actions :
 - Le workflow tourne automatiquement chaque **mercredi à 06:00 UTC** (07h00 en hiver / 08h00 en été en France).
 - Vous pouvez le déclencher manuellement à tout moment dans l'onglet **Actions** > **Cinema Letterboxd Alert** > **Run workflow**.
+# Projet-letterboxd
